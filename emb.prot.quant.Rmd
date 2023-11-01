@@ -1,6 +1,6 @@
 ---
 title: "Embryo protein quantification for bottom-up proteomics sample solution digests"
-author: Andrew Garcia
+author: Andrew Garcia (CUNY Graduate Center; New York State Institute for Basic Research)
 output: html_document
 date: "Last compiled on `r format(Sys.time(), '%d %B, %Y %H:%M')`"
 ---

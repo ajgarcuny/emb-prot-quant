@@ -1,8 +1,8 @@
 ---
-title: "embryo.protein.quant"
+title: "Embryo protein quantification for bottom-up proteomics sample solution digests"
 author: Andrew Garcia
 output: html_document
-date: "2023-07-28"
+date: "Last compiled on `r format(Sys.time(), '%d %B, %Y %H:%M')`"
 ---
   
 
@@ -10,6 +10,12 @@ date: "2023-07-28"
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+# Overview
+We are testing which protein digestion method to use for the preparation of bottom-up proteomics
+samples from mutant mouse embryos on the C57BL/6J background that lack Naa10 and Naa12.
+
+We are testing 2 different lysis buffers, 0.1% v/v Rapigest 8M urea 100 mM TEAB and 10% SDS 100
+mM TEAB. The 
 
 # aggregated data for whole embryo lysates
   
@@ -27,7 +33,6 @@ emb.all
 ## Grouped by Theiler stage only
 
 ```{r}
-install.packages("Rmisc")
 library(Rmisc)
 
 #Theiler stage and total protein summary stats
@@ -41,7 +46,6 @@ emb_sum
 
 ```{r}
 #summary statistics of total protein with both Theiler stage and digestion method
-
 library(Rmisc)
 dig_sum <- summarySE(emb.all, measurevar = "total.protein",
                      groupvars = c("digestion.method","Theiler.stage"),
@@ -56,7 +60,7 @@ Total protein detected at each Theiler stage/digestion method combo.
 
 ## Linear model of factors that affect total protein
 ```{r}
-install.packages("car")
+install.packages("car",repos = 'http://cran.us.r-project.org')
 ```
 
 
@@ -277,7 +281,7 @@ euthanized will be ready for timed matings to obtain these older whole embryo ly
 ## Alternative plotting?
 
 ```{r}
-install.packages("ggbeeswarm")
+install.packages("ggbeeswarm", repos ='http://cran.us.r-project.org')
 library(ggbeeswarm)
 ```
 

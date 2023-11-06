@@ -14,11 +14,17 @@ knitr::opts_chunk$set(echo = TRUE)
 We are testing which protein digestion method to use for the preparation of bottom-up proteomics
 samples from mutant mouse embryos on the C57BL/6J background that lack Naa10 and Naa12.
 
-We are testing 2 different lysis buffers, 0.1% v/v Rapigest 8M urea 100 mM TEAB and 10% SDS 100
-mM TEAB. The 
+We are testing 2 different lysis buffers: 1) 0.1% w/v Rapigest 8M urea 100 mM TEAB and 2) 10% SDS
+100 mM TEAB.
+
+Total protein is quantified after tissue lysis and homogenization. We had used the Bradford
+assay using Advanced Protein Assay PrecisionRed reagent (Cytoskeleton Inc., #ADV02). However,
+SDS interferes with the Bradford assay even when diluted to a concentration of 5%.
+
+We then switched to the bicinchoninic acid assay (BCA), specifically the micro BCA assay (Thermo, #23235). This allows us to quantify SDS-containing lysis buffers.
 
 # aggregated data for whole embryo lysates
-  
+
 ```{r}
 emb.all <- read.csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vTElQBIq1HxfNIbB98zeaF2Blsx8_4MPQhdM4njwJiX6tS7EovpZa4ZL2KhFNPWADiVsVJOT4Jj29MN/pub?gid=0&single=true&output=csv", header = T)
 

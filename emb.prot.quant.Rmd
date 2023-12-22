@@ -31,12 +31,13 @@ emb.all <- read.csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vTElQBIq1Hx
 emb.all$sample.type<- as.factor(emb.all$sample.type)
 emb.all$Theiler.stage<- as.factor(emb.all$Theiler.stage)
 emb.all$digestion.method<- as.factor(emb.all$digestion.method)
+emb.all$experiment <-as.factor(emb.all$experiment)
 
 
 emb.all
 ```
-# Summary statistics of total protein via BCA or Bradford
-## Grouped by Theiler stage only
+## Summary statistics of total protein via BCA or Bradford
+### Grouped by Theiler stage only
 
 ```{r}
 library(Rmisc)
@@ -48,7 +49,7 @@ emb_sum <- summarySE(emb.all, measurevar="total.protein",
 write.csv(emb_sum,"emb_sum.csv")
 emb_sum
 ```
-## Grouped by digestion method and Theiler stage
+### Grouped by digestion method and Theiler stage
 
 ```{r}
 #summary statistics of total protein with both Theiler stage and digestion method
@@ -64,7 +65,7 @@ dig_sum
 Total protein detected at each Theiler stage/digestion method combo.
 
 
-## Linear model of factors that affect total protein
+### Linear model of factors that affect total protein
 ```{r}
 install.packages("car",repos = 'http://cran.us.r-project.org')
 ```
@@ -172,6 +173,30 @@ paired.prot.plot <- ggplot(data = emb.all, aes(x = Theiler.stage,
 
 paired.prot.plot
 ```
+
+
+### Experiment effects?
+```{r}
+library(ggplot2)
+ts.exp.plot <- ggplot(data = emb.all, aes(x = Theiler.stage,
+                                               y = total.protein,
+                                               shape = experiment))+
+  geom_point(aes(color = digestion.method),
+             position = position_jitterdodge(), alpha=1)+
+  geom_boxplot(outlier.shape = NA,
+               alpha = 0.1)+
+  stat_summary(fun = mean, color = "black", position = position_dodge(0.75),
+               width = 0.2,
+               geom = "crossbar",
+               show.legend = FALSE)+
+  xlab("Theiler stage")+
+  ylab("total protein (µg)")+
+  scale_colour_discrete(na.translate = F)+
+  theme_bw(base_size = 12, base_family = "Helvetica")+scale_fill_grey()
+
+ts.exp.plot
+```
+
 
 
 ## Data points further classified by quantification assay and digestion method.

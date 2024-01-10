@@ -65,6 +65,19 @@ dig_sum
 Total protein detected at each Theiler stage/digestion method combo.
 
 
+## experiment effects on total protein detected at each TS
+```{r}
+library(Rmisc)
+exp_sum <- summarySE(emb.all, measurevar = "total.protein",
+                     groupvars = c("digestion.method","quantification.assay","Theiler.stage","experiment"),
+                     na.rm = T)
+
+write.csv(exp_sum, "exp_sum.csv", row.names = F)
+
+exp_sum
+```
+
+
 ### Linear model of factors that affect total protein
 ```{r}
 install.packages("car",repos = 'http://cran.us.r-project.org')
@@ -72,7 +85,7 @@ install.packages("car",repos = 'http://cran.us.r-project.org')
 
 
 ```{r}
-protein.lm <- lm(total.protein ~ Theiler.stage*digestion.method*quantification.assay,
+protein.lm <- lm(total.protein ~ Theiler.stage*digestion.method*quantification.assay*experiment,
                  data = emb.all)
 
 plot(protein.lm)
@@ -93,7 +106,9 @@ aforementioned factors
 
 #### First model
 ```{r}
+library(car)
 summary.aov(protein.lm)
+
 ```
 
 Embryonic age determined by Theiler staging drives the variation in total protein.
@@ -181,7 +196,7 @@ library(ggplot2)
 ts.exp.plot <- ggplot(data = emb.all, aes(x = Theiler.stage,
                                                y = total.protein,
                                                shape = experiment))+
-  geom_point(aes(color = digestion.method),
+  geom_point(aes(color = digestion.method ),
              position = position_jitterdodge(), alpha=1)+
   geom_boxplot(outlier.shape = NA,
                alpha = 0.1)+
@@ -196,6 +211,10 @@ ts.exp.plot <- ggplot(data = emb.all, aes(x = Theiler.stage,
 
 ts.exp.plot
 ```
+
+Total protein yields have varied with experiment; getting better at TS15 embryos,
+but varied with TS17 embryos. S-trap digested TS13 embryos may need to be processed
+with the S-trap mini column.
 
 
 
